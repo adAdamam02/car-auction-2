@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block scripts %}
+    <script src="/static/scripts_selection.js"></script>
+{% endblock %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h2>Select 7 Cars with a Total Value Less Than $100,000 by Sunday Night</h2>
+        <br>
+        <br>
+    </div>
+
+    <form id="car-selections-form" action="/review" method="post">
+        <div class="sticky-top">
+
+            <div class="card mb-3 text-center">
+                <div class="card-body">
+                    <div id="overselection" class="alert alert-danger d-none" role="alert"></div>
+                    <div id="overspent" class="alert alert-danger d-none" role="alert"></div>
+                    <div id="underselection" class="alert alert-danger d-none" role="alert"></div>
+                    <h4 class="card-title">Car Selections</h4>
+
+                    <table class="table">
+                        <!-- <thead class="thead-light"> -->
+                            <!-- <tr> -->
+                                <!-- <th></th> -->
+                                <!-- <th>Number&nbsp&nbsp&nbsp&nbsp</th> -->
+                                <!-- <th>Total</th> -->
+                            <!-- </tr> -->
+                        <!-- </thead> -->
+                        <tbody>
+                            <tr>
+                                <td>Selected</td>
+                                <td id="selected-cars">{{ checked_cars | length }}&nbsp&nbsp&nbsp&nbsp</td>
+                                <td id="selected-total">{{ (checked_cars.values() | sum) | usd}}</td>
+                            </tr>
+                            <tr>
+                                <td>Remaining</td>
+                                <td id="remaining-cars">{{ 7 - (checked_cars | length) }}&nbsp&nbsp&nbsp&nbsp</td>
+                                <td id="remaining-total">{{ (100000 - (checked_cars.values() | sum)) | usd}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button type="submit" class="btn btn-secondary" id="review-selections-button">Review Selections</button>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <h4>9th Round Cars</h4>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Car</th>
+                    <th>Six Day Price</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for car in info %}
+
+                <tr class="car-row">
+                    <td><a target="_blank" rel="noopener noreferrer" href="{{ car[1] }}">{{ car[0] }}</a></td>
+                    <td class="car-price">{{ car[2] | usd }}</td>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input name="{{ car[3] }}" class="car-selection-checkbox form-check-input big-checkbox" {{ 'checked' if car[3] in checked_cars else '' }} type="checkbox">
+                        </div>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </form>
+
+{% endblock %}

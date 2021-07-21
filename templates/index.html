@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+
+    {% if (info | length) == 0 %}
+        <form action="/selection" method="get">
+            <button class="btn btn-primary" type="submit">Select Cars</button>
+        </form>
+
+    {% else %}
+
+        <h4>9th Round Car Selections</h4>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Car</th>
+                    
+                    {% for day in days %}
+                        <th>{{ day }}</th>
+                    {% endfor %}
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for car in info %}
+
+                    <tr class="car-row">
+                        <td><a target="_blank" rel="noopener noreferrer" href="{{ car[1] }}">{{ car[0] }}</a></td>
+
+                        {% for i in range(2, 9) %}
+                            <td class="car-price">{{ car[i] | usd if car[i] is not none else "—"}}</td>
+                        {% endfor %}
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock %}

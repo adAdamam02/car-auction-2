@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block scripts %}
+    <script src="/static/scripts_review.js"></script>
+{% endblock %}
+
+{% block title %}
+    Review Selections
+{% endblock %}
+
+{% block main %}
+    <h4>9th Round Car Selections</h4>
+
+
+    <form action="/selection" method="post" autocomplete="off">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Car</th>
+                    <th>Six Day Price</th>
+                    <th>Selected</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for car in info %}
+
+                <tr class="car-row">
+                    <td><a target="_blank" rel="noopener noreferrer" href="{{ car[1] }}">{{ car[0] }}</a></td>
+                    <td class="car-price">{{ car[2] | usd }}</td>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input name="{{ car[3] }}" class="car-selection-checkbox form-check-input big-checkbox" type="checkbox" checked>
+                        </div>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        <button name="reevaluate" type="submit" class="btn btn-primary">Reevaluate Selections</button>
+        <span id="complete-purchase-span">
+            &ensp; 
+            <button name="complete-purchase" type="submit" class="btn btn-primary">Complete Purchase</button>
+        </span>
+
+    </form>
+
+{% endblock %}
