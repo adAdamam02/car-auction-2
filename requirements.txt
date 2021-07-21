@@ -32,7 +32,6 @@ psycopg2==2.9.1
 psycopg2-binary==2.9.1
 psycopg2-pool==1.1
 pyasn1==0.4.8
-gunicorn
 pyasn1-modules==0.2.8
 pycparser==2.20
 PyDispatcher==2.0.5
@@ -47,3 +46,4 @@ w3lib==1.22.0
 Werkzeug==2.0.1
 wrapt==1.12.1
 zope.interface==5.4.0
+gunicorn
